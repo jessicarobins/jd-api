@@ -16,4 +16,4 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-Jessdocs::Application.config.secret_token = 'ce42dc82ce63a935cdec8f642bf3718db36baf346c0881938fd2e6ca599d36f6d95cc4f3db3ece8bbf1877936a01441934161097dc2e89a31b439d3bb0771f16'
+Jessdocs::Application.config.secret_key_base = 'ce42dc82ce63a935cdec8f642bf3718db36baf346c0881938fd2e6ca599d36f6d95cc4f3db3ece8bbf1877936a01441934161097dc2e89a31b439d3bb0771f16'
