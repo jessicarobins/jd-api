@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
       org = Organization.create!(:name => 'Personal')
       self.organizations << org
       
-      user.add_role :write, org
+      self.add_role :write, org
       
       Project.create!(
         :name => 'Demo Project', 
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
       if org
         self.organizations << org
         
-        user.add_role :read, org
+        self.add_role :read, org
       end
     end
 end
