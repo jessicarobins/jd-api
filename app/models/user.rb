@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     def add_user_defaults
       create_personal_org
       add_domain_org
-      create_setting
+      create_settings
     end
     
     def create_settings
