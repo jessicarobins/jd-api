@@ -11,6 +11,8 @@ gem 'puma'
 
 gem 'pg'
 
+gem 'rails_12factor', group: :production
+
 #authentication
 gem 'devise_token_auth'
 gem "omniauth-google-oauth2"
