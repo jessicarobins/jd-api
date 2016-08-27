@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(create_params)
+    @project = Project.new(create_params.merge(:created_by => current_user))
 
     if @project.save
       render json: @project, status: :created, location: @project
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
+    @project.destroy!
 
     head :no_content
   end
@@ -56,7 +56,7 @@ class ProjectsController < ApplicationController
     end
     
     def create_params
-      params.require(:project).permit(:name, :created_by_id, :organization_id)
+      params.require(:project).permit(:name, :organization_id)
     end
     
     def update_params

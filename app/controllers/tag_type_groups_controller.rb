@@ -18,7 +18,7 @@ class TagTypeGroupsController < ApplicationController
   # POST /tag_type_groups
   # POST /tag_type_groups.json
   def create
-    @tag_type_group = TagTypeGroup.new(create_params)
+    @tag_type_group = TagTypeGroup.new(create_params.merge(:created_by => current_user))
 
     if @tag_type_group.save
       render json: @tag_type_group, status: :created, location: @tag_type_group
@@ -57,7 +57,7 @@ class TagTypeGroupsController < ApplicationController
     end
     
     def create_params
-      params.require(:tag_type_group).permit(:color, :name, :created_by_id, :organization_id)
+      params.require(:tag_type_group).permit(:color, :name, :organization_id)
     end
     
     def update_params
