@@ -42,6 +42,20 @@ class Spec < ActiveRecord::Base
         self.comments.open.count
     end
     
+    def self.create_default_specs(project_id:, created_by_id:)
+        parent = Spec.create!(
+            :project_id => project_id,
+            :description => 'the jessdocs spec list',
+            :created_by_id => created_by_id,
+            :updated_by_id => created_by_id)
+        
+        parent.children.create!(
+            :project_id => project_id,
+            :description => 'should display a list of specs',
+            :created_by_id => created_by_id,
+            :updated_by_id => created_by_id)
+    end
+    
     def self.filter(filter_params)
         specs = Spec.for_project(filter_params[:project_id])
         

@@ -16,10 +16,14 @@ class Organization < ActiveRecord::Base
   
   validates_uniqueness_of :domain, allow_nil: true, allow_blank: true
   
-  after_create :create_settings
+  after_create :set_up_org
   
   private
-    def create_settings
+    def set_up_org
+      jess = User.find_by!(:email => 'jessrrobins@gmail.com')
       OrgSetting.create!(:organization => self)
+      Project.create_default_project(
+        org_id: self.id,
+        created_by_id: jess.id)
     end
 end
