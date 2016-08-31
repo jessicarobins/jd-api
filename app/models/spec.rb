@@ -134,19 +134,22 @@ class Spec < ActiveRecord::Base
         if parent_id
             insert_at = Spec.find(parent_id).spec_order + 1
         end
+        tracker_id = Project.find(project_id).organization.org_setting.tracker_id
         return self.parse_alternate(   
             :text_array => text.split("\n"), 
             :project_id => project_id, 
             :parent_id => parent_id,
             :created_by_id => created_by_id,
-            :insert_at => insert_at)
+            :insert_at => insert_at,
+            :tracker_id => tracker_id)
     end
     
-    def self.parse_alternate(text_array:, project_id:, parent_id:nil, depth:0, previous:nil, error_count:0, created_by_id:, insert_at:nil, spec_count:0)
+    def self.parse_alternate(text_array:, project_id:, parent_id:nil, depth:0, previous:nil, error_count:0, created_by_id:, insert_at:nil, spec_count:0, tracker_id:)
         #regex = /(\t*|-*)\s?(\w+)\s?(.*)/
         #instead of looking for s{2}* we should replace s{2}* with \t
         # not sure if this needs to be just the leading whitespace only?
-        regex = /(-*)\s?(\w+)\s?(.*)/
+        # regex = /(-*)\s?(\w+)\s?(.*)/
+        regex = /(-*)([^-#]+)\s?(.*)/
         unless text_array.any?
             return {:specs_created => spec_count, :errors => error_count}
         end
@@ -156,10 +159,8 @@ class Spec < ActiveRecord::Base
         line.gsub!(/[ ]{2}/, '-')
         line.gsub!(/\t/, '-')
         
-        tabs, spec_type_indicator, spec_description_rest = line.scan(regex).first
+        tabs, spec_description, tags = line.scan(regex).first
         spec_depth = tabs.nil? ? 0 : tabs.length
-        
-        spec_description = "#{spec_type_indicator} #{spec_description_rest}"
         
         begin
             spec = Spec.new(
@@ -190,6 +191,16 @@ class Spec < ActiveRecord::Base
                 insert_at = insert_at + 1
             end
             spec_count = spec_count + 1
+            
+            tickets = Tag.mass_add(
+                :spec_id => spec.id,
+                :tags => tags)
+            
+            Ticket.add_from_array(
+                :spec_id => spec.id,
+                :tickets => tickets,
+                :tracker_id => tracker_id)
+                
         rescue => error
             error_count = error_count + 1
             puts error.inspect
@@ -205,7 +216,8 @@ class Spec < ActiveRecord::Base
             :parent_id => parent_id,
             :insert_at => insert_at,
             :created_by_id => created_by_id,
-            :spec_count => spec_count)
+            :spec_count => spec_count,
+            :tracker_id => tracker_id)
     end
     
     def self.export_spec_to_protractor(spec:, protractor_html: "", depth: 0)

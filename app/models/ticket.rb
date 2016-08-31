@@ -21,6 +21,15 @@ class Ticket < ActiveRecord::Base
         end
         tracker_url + self.string_id
     end
+    
+    def self.add_from_array(spec_id:, tickets:, tracker_id:)
+        tickets.each do |ticket|
+            Ticket.create!(
+                :spec_id => spec_id,
+                :name => ticket,
+                :tracker_id => tracker_id)
+        end
+    end
 
     private
         def add_ids
