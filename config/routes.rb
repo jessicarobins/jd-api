@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :user_settings, except: [:new, :edit] do
       collection do
         put 'toggle_menu_favorite'
+        put 'toggle_intro_off'
       end
     end
     resources :comments, except: [:new, :edit] do

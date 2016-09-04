@@ -38,6 +38,11 @@ class UserSettingsController < ApplicationController
     end
     setting.save!
   end
+  
+  def toggle_intro_off
+    setting = current_user.user_setting
+    setting.update!(:show_intro => false)
+  end
 
   # PATCH/PUT /user_settings/1
   # PATCH/PUT /user_settings/1.json
@@ -72,4 +77,5 @@ class UserSettingsController < ApplicationController
     def menu_favorite_params
       params.require(:favorite).permit(:name)
     end
+    
 end
