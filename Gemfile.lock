@@ -175,6 +175,7 @@ DEPENDENCIES
   ancestry!
   byebug
   devise_token_auth
+  json
   omniauth
   omniauth-google-oauth2
   pg

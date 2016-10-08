@@ -1,7 +1,7 @@
 class Spec < ActiveRecord::Base
     before_save :format
     
-    has_ancestry
+    has_ancestry cache_depth: true
     
     acts_as_list scope: :project_id, column: :spec_order
     

@@ -13,6 +13,8 @@ gem 'pg'
 
 gem 'rails_12factor', group: :production
 
+gem 'json'
+
 #authentication
 gem 'devise_token_auth'
 gem "omniauth-google-oauth2"

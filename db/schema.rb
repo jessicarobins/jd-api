@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904145952) do
+ActiveRecord::Schema.define(version: 20160921001130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,16 +65,17 @@ ActiveRecord::Schema.define(version: 20160904145952) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "specs", force: :cascade do |t|
-    t.string   "description",                   null: false
-    t.integer  "created_by_id",                 null: false
-    t.integer  "updated_by_id",                 null: false
+    t.string   "description",                    null: false
+    t.integer  "created_by_id",                  null: false
+    t.integer  "updated_by_id",                  null: false
     t.string   "ancestry"
-    t.integer  "project_id",                    null: false
-    t.boolean  "bookmarked",    default: false, null: false
-    t.integer  "spec_order",                    null: false
+    t.integer  "project_id",                     null: false
+    t.boolean  "bookmarked",     default: false, null: false
+    t.integer  "spec_order",                     null: false
     t.time     "deleted_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "ancestry_depth", default: 0
   end
 
   add_index "specs", ["ancestry"], name: "index_specs_on_ancestry", using: :btree
