@@ -14,20 +14,21 @@ class OrganizationsController < ApplicationController
   def show
     render json: @organization
   end
-  
+
   def change_user_role
     user = User.find change_user_role_params[:id]
-    user.roles.where(:resource_id => @organization.id).destroy_all
+    user.roles.where(resource_id: @organization.id).destroy_all
     new_role = change_user_role_params[:role]
     user.add_role new_role, @organization
-    render :json => user.roles
+    render json: user.roles
   end
-  
+
   def users
     users = @organization.users.as_json(
-      :only => [:id, :name, :image],
-      :methods => :roles)
-    
+      only: [:id, :name, :image],
+      methods: :roles
+    )
+
     render json: users
   end
 
@@ -47,21 +48,17 @@ class OrganizationsController < ApplicationController
   # PATCH/PUT /organizations/1.json
   def update
     user = User.find(update_params[:user_id])
-    
-    if user
-      @organization.users.delete(user)
-    end
-    
+
+    @organization.users.delete(user) if user
+
     head :no_content
   end
-  
+
   def add_user
-    user = User.where(:email => add_user_params[:email]).first
-    
-    if user
-      user.organizations << @organization
-    end
-    
+    user = User.where(email: add_user_params[:email]).first
+
+    user.organizations << @organization if user
+
     head :no_content
   end
 
@@ -75,23 +72,23 @@ class OrganizationsController < ApplicationController
 
   private
 
-    def set_organization
-      @organization = Organization.find(params[:id])
-    end
+  def set_organization
+    @organization = Organization.find(params[:id])
+  end
 
-    def organization_params
-      params[:organization]
-    end
-    
-    def update_params
-      params.require(:org).permit(:user_id)
-    end
-    
-    def add_user_params
-      params.require(:org).permit(:email)
-    end
-    
-    def change_user_role_params
-      params.require(:user).permit(:id, :role)
-    end
+  def organization_params
+    params[:organization]
+  end
+
+  def update_params
+    params.require(:org).permit(:user_id)
+  end
+
+  def add_user_params
+    params.require(:org).permit(:email)
+  end
+
+  def change_user_role_params
+    params.require(:user).permit(:id, :role)
+  end
 end

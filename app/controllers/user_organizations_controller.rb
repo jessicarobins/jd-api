@@ -49,11 +49,11 @@ class UserOrganizationsController < ApplicationController
 
   private
 
-    def set_user_organization
-      @user_organization = UserOrganization.find(params[:id])
-    end
+  def set_user_organization
+    @user_organization = UserOrganization.find(params[:id])
+  end
 
-    def user_organization_params
-      params[:user_organization]
-    end
+  def user_organization_params
+    params[:user_organization]
+  end
 end

@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
   rolify
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable,
-    :confirmable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
 
   devise :omniauthable
@@ -47,12 +47,13 @@ class User < ActiveRecord::Base
   after_create :add_user_defaults
 
   def personal_org
-    self.organizations.where(:name => 'Personal').first
+    organizations.where(name: 'Personal').first
   end
 
   private
+
   def set_up_user
-    #devise stuff
+    # devise stuff
     skip_confirmation!
   end
 
@@ -63,23 +64,23 @@ class User < ActiveRecord::Base
   end
 
   def create_settings
-    UserSetting.create!(:user => self)
+    UserSetting.create!(user: self)
   end
 
   def create_personal_org
-    org = Organization.create!(:name => 'Personal')
-    self.organizations << org
+    org = Organization.create!(name: 'Personal')
+    organizations << org
 
-    self.add_role :write, org
+    add_role :write, org
   end
 
   def add_domain_org
-    domain = self.email.split('@')
-    org = Organization.find_by(:domain => domain)
+    domain = email.split('@')
+    org = Organization.find_by(domain: domain)
     if org
-      self.organizations << org
+      organizations << org
 
-      self.add_role :read, org
+      add_role :read, org
     end
   end
 end

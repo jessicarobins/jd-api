@@ -27,7 +27,7 @@ class UserSettingsController < ApplicationController
       render json: @user_setting.errors, status: :unprocessable_entity
     end
   end
-  
+
   def toggle_menu_favorite
     favorite = menu_favorite_params[:name]
     setting = current_user.user_setting
@@ -38,10 +38,10 @@ class UserSettingsController < ApplicationController
     end
     setting.save!
   end
-  
+
   def toggle_intro_off
     setting = current_user.user_setting
-    setting.update!(:show_intro => false)
+    setting.update!(show_intro: false)
   end
 
   # PATCH/PUT /user_settings/1
@@ -66,16 +66,15 @@ class UserSettingsController < ApplicationController
 
   private
 
-    def set_user_setting
-      @user_setting = UserSetting.find(params[:id])
-    end
+  def set_user_setting
+    @user_setting = UserSetting.find(params[:id])
+  end
 
-    def user_setting_params
-      params[:user_setting]
-    end
-    
-    def menu_favorite_params
-      params.require(:favorite).permit(:name)
-    end
-    
+  def user_setting_params
+    params[:user_setting]
+  end
+
+  def menu_favorite_params
+    params.require(:favorite).permit(:name)
+  end
 end

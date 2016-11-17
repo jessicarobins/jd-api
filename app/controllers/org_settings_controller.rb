@@ -31,7 +31,7 @@ class OrgSettingsController < ApplicationController
   # PATCH/PUT /org_settings/1.json
   def update
     if @org_setting.update(update_params)
-      render json: @org_setting.to_json(:include => :tracker)
+      render json: @org_setting.to_json(include: :tracker)
     else
       render json: @org_setting.errors, status: :unprocessable_entity
     end
@@ -47,15 +47,15 @@ class OrgSettingsController < ApplicationController
 
   private
 
-    def set_org_setting
-      @org_setting = OrgSetting.find(params[:id])
-    end
+  def set_org_setting
+    @org_setting = OrgSetting.find(params[:id])
+  end
 
-    def org_setting_params
-      params[:org_setting]
-    end
-    
-    def update_params
-      params.require(:org_setting).permit(:tracker_id, :tracker_domain)
-    end
+  def org_setting_params
+    params[:org_setting]
+  end
+
+  def update_params
+    params.require(:org_setting).permit(:tracker_id, :tracker_domain)
+  end
 end

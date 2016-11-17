@@ -5,9 +5,9 @@ class CreateUserSettings < ActiveRecord::Migration
       t.integer :user_id, null: false
       t.timestamps null: false
     end
-    
+
     User.all.each do |user|
-      UserSetting.create!(:user => user)
+      UserSetting.create!(user: user)
     end
   end
 end

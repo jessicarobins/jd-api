@@ -6,7 +6,7 @@ class TicketsController < ApplicationController
   def index
     @tickets = Ticket.all
 
-    render json: @tickets.group_by(&:spec_id).to_json(:methods => :url)
+    render json: @tickets.group_by(&:spec_id).to_json(methods: :url)
   end
 
   # GET /tickets/1
@@ -18,11 +18,10 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
-    
     @ticket = Ticket.new(create_params)
 
     if @ticket.save
-      render json: @ticket.to_json(:methods => :url), status: :created, location: @ticket
+      render json: @ticket.to_json(methods: :url), status: :created, location: @ticket
     else
       render json: @ticket.errors, status: :unprocessable_entity
     end
@@ -50,15 +49,15 @@ class TicketsController < ApplicationController
 
   private
 
-    def set_ticket
-      @ticket = Ticket.find(params[:id])
-    end
+  def set_ticket
+    @ticket = Ticket.find(params[:id])
+  end
 
-    def ticket_params
-      params[:ticket]
-    end
-    
-    def create_params
-      params.require(:ticket).permit(:name, :spec_id)
-    end
+  def ticket_params
+    params[:ticket]
+  end
+
+  def create_params
+    params.require(:ticket).permit(:name, :spec_id)
+  end
 end

@@ -24,5 +24,5 @@ class Comment < ActiveRecord::Base
 
   default_scope { order(created_at: :asc) }
   scope :by_resolved, -> { all.group_by(&:resolved) }
-  scope :open, -> { where(:resolved => false) }
+  scope :open, -> { where(resolved: false) }
 end

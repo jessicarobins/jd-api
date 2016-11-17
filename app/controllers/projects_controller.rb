@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(create_params.merge(:created_by => current_user))
+    @project = Project.new(create_params.merge(created_by: current_user))
 
     if @project.save
       render json: @project, status: :created, location: @project
@@ -47,19 +47,19 @@ class ProjectsController < ApplicationController
 
   private
 
-    def set_project
-      @project = Project.find(params[:id])
-    end
+  def set_project
+    @project = Project.find(params[:id])
+  end
 
-    def project_params
-      params[:project]
-    end
-    
-    def create_params
-      params.require(:project).permit(:name, :organization_id)
-    end
-    
-    def update_params
-      params.require(:project).permit(:name)
-    end
+  def project_params
+    params[:project]
+  end
+
+  def create_params
+    params.require(:project).permit(:name, :organization_id)
+  end
+
+  def update_params
+    params.require(:project).permit(:name)
+  end
 end

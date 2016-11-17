@@ -25,10 +25,11 @@ class Organization < ActiveRecord::Base
   private
 
   def set_up_org
-    jess = User.find_by!(:email => 'jessrrobins@gmail.com')
-    OrgSetting.create!(:organization => self)
+    jess = User.find_by!(email: 'jessrrobins@gmail.com')
+    OrgSetting.create!(organization: self)
     Project.create_default_project(
-      org_id: self.id,
-      created_by_id: jess.id)
+      org_id: id,
+      created_by_id: jess.id
+    )
   end
 end

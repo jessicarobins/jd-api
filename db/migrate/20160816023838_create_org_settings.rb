@@ -8,9 +8,9 @@ class CreateOrgSettings < ActiveRecord::Migration
       t.timestamps null: false
       t.timestamps null: false
     end
-    
+
     Organization.all.each do |org|
-      OrgSetting.create!(:organization_id => org.id)
+      OrgSetting.create!(organization_id: org.id)
     end
   end
 end

@@ -18,7 +18,7 @@ class TagTypeGroupsController < ApplicationController
   # POST /tag_type_groups
   # POST /tag_type_groups.json
   def create
-    @tag_type_group = TagTypeGroup.new(create_params.merge(:created_by => current_user))
+    @tag_type_group = TagTypeGroup.new(create_params.merge(created_by: current_user))
 
     if @tag_type_group.save
       render json: @tag_type_group, status: :created, location: @tag_type_group
@@ -40,27 +40,27 @@ class TagTypeGroupsController < ApplicationController
   # DELETE /tag_type_groups/1
   # DELETE /tag_type_groups/1.json
   def destroy
-    TagType.where(:tag_type_group => @tag_type_group).update_all(:tag_type_group_id => nil)
+    TagType.where(tag_type_group: @tag_type_group).update_all(tag_type_group_id: nil)
     @tag_type_group.destroy
-    
+
     head :no_content
   end
 
   private
 
-    def set_tag_type_group
-      @tag_type_group = TagTypeGroup.find(params[:id])
-    end
+  def set_tag_type_group
+    @tag_type_group = TagTypeGroup.find(params[:id])
+  end
 
-    def tag_type_group_params
-      params[:tag_type_group]
-    end
-    
-    def create_params
-      params.require(:tag_type_group).permit(:color, :name, :organization_id)
-    end
-    
-    def update_params
-      params.require(:tag_type_group).permit(:name, :color)
-    end
+  def tag_type_group_params
+    params[:tag_type_group]
+  end
+
+  def create_params
+    params.require(:tag_type_group).permit(:color, :name, :organization_id)
+  end
+
+  def update_params
+    params.require(:tag_type_group).permit(:name, :color)
+  end
 end

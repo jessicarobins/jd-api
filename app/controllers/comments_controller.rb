@@ -19,10 +19,10 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(add_params.merge(:user_id => current_user.id))
+    @comment = Comment.new(add_params.merge(user_id: current_user.id))
 
     if @comment.save
-      render json: @comment.as_json(:include => {:user => {:only => [:image, :name]}}), status: :created, location: @comment
+      render json: @comment.as_json(include: { user: { only: [:image, :name] } }), status: :created, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -37,9 +37,9 @@ class CommentsController < ApplicationController
       render json: @comment.errors, status: :unprocessable_entity
     end
   end
-  
+
   def resolve
-    @comment.update!(:resolved => true)
+    @comment.update!(resolved: true)
   end
 
   # DELETE /comments/1
@@ -52,16 +52,15 @@ class CommentsController < ApplicationController
 
   private
 
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
-    def comment_params
-      params[:comment]
-    end
-    
-    def add_params
-      params.require(:comment).permit(:spec_id, :text)
-    end
-    
+  def comment_params
+    params[:comment]
+  end
+
+  def add_params
+    params.require(:comment).permit(:spec_id, :text)
+  end
 end

@@ -4,7 +4,7 @@ class TrackersController < ApplicationController
   # GET /trackers
   # GET /trackers.json
   def index
-    @trackers = Tracker.where(:public => true)
+    @trackers = Tracker.where(public: true)
 
     render json: @trackers
   end
@@ -49,11 +49,11 @@ class TrackersController < ApplicationController
 
   private
 
-    def set_tracker
-      @tracker = Tracker.find(params[:id])
-    end
+  def set_tracker
+    @tracker = Tracker.find(params[:id])
+  end
 
-    def tracker_params
-      params[:tracker]
-    end
+  def tracker_params
+    params[:tracker]
+  end
 end
