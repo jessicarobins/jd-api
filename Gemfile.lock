@@ -51,6 +51,9 @@ GEM
     acts_as_paranoid (0.5.0.rc1)
       activerecord (>= 4.0, < 5.1)
       activesupport (>= 4.0, < 5.1)
+    annotate (2.6.10)
+      activerecord (>= 3.2, <= 4.3)
+      rake (~> 10.4)
     arel (6.0.3)
     bcrypt (3.1.11)
     builder (3.2.2)
@@ -146,7 +149,7 @@ GEM
       activesupport (= 4.2.6)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (11.2.2)
+    rake (10.5.0)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     rolify (5.1.0)
@@ -173,6 +176,7 @@ DEPENDENCIES
   acts_as_list
   acts_as_paranoid (~> 0.5.0.rc1)
   ancestry!
+  annotate (= 2.6.10)
   byebug
   devise_token_auth
   omniauth
@@ -187,4 +191,4 @@ DEPENDENCIES
   spring
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904145952) do
+ActiveRecord::Schema.define(version: 20161117204410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,4 +184,20 @@ ActiveRecord::Schema.define(version: 20160904145952) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "comments", "specs"
+  add_foreign_key "comments", "users"
+  add_foreign_key "org_settings", "organizations"
+  add_foreign_key "org_settings", "trackers"
+  add_foreign_key "projects", "organizations"
+  add_foreign_key "specs", "projects"
+  add_foreign_key "tag_type_groups", "organizations"
+  add_foreign_key "tag_types", "organizations"
+  add_foreign_key "tag_types", "tag_type_groups"
+  add_foreign_key "tags", "specs"
+  add_foreign_key "tags", "tag_types"
+  add_foreign_key "tickets", "specs"
+  add_foreign_key "tickets", "trackers"
+  add_foreign_key "user_organizations", "organizations"
+  add_foreign_key "user_organizations", "users"
+  add_foreign_key "user_settings", "users"
 end
